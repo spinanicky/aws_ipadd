@@ -1,5 +1,8 @@
-[![Actions Status](https://github.com/piyushsonigra/aws_ipadd/workflows/Build%20&%20Release/badge.svg)](https://github.com/piyushsonigra/aws_ipadd/actions)
+[![Actions Status](https://github.com/spinanicky/aws_ipadd/workflows/Build%20&%20Release/badge.svg)](https://github.com/spinanicky/aws_ipadd/actions)
 
+# UPDATE
+
+This version has been updated to allow you to specify a minimum and a maximum range. It also has an updated MAKE file that takes into account that PyInstaller may not be accessible from your terminal but only through python.
 
 # aws_ipadd
 
@@ -20,13 +23,13 @@ Download aws_ipadd for your operating system
   Linux
 
   ```console
-  wget -c https://github.com/piyushsonigra/aws_ipadd/releases/latest/download/aws_ipadd_linux_x64.tar.gz -O - | tar -xz -C /usr/local/bin/
+  wget -c https://github.com/spinanicky/aws_ipadd/releases/latest/download/aws_ipadd_linux_x64.tar.gz -O - | tar -xz -C /usr/local/bin/
   ```
 
   OSX
 
   ```console
-  wget -c https://github.com/piyushsonigra/aws_ipadd/releases/latest/download/aws_ipadd_osx_x64.tar.gz -O - | tar -xz -C /usr/local/bin/
+  wget -c https://github.com/spinanicky/aws_ipadd/releases/latest/download/aws_ipadd_osx_x64.tar.gz -O - | tar -xz -C /usr/local/bin/
   ```
 
 Note: If you get errors related to permission or access, Please run command with `sudo`.
@@ -62,13 +65,16 @@ Run below commands to conifgure aws_ipadd command.
     AWS security group id.
 
   - rule_name:
-    AWS security group rule name to identify rule purpose.
+    AWS security group rule name to identify rule purpose. Can be anything you desire (It is simply applied to the comment section of the rule)
 
   - protocol:
-    You can define protocol for port TCP or UDP. Default is TCP.
+    You can define protocol for port TCP or UDP. Default is TCP. Alternatively -1 can be used to allow all ports and all protocols.
  
-  - port:
-    Network port to whitelist with IP.
+  - start_port:
+    Network starting port to whitelist with IP.
+    
+  - end_port:
+    Network ending port to whitelist with IP.
 
   Below is the sample configuration of `~/.aws_ipadd/aws_ipadd` file.
 
@@ -78,7 +84,8 @@ Run below commands to conifgure aws_ipadd command.
   aws_profile = my_project
   security_group_id = sg-d26fdre9d
   protocol = TCP
-  port = 22
+  start_port = 22
+  end_port = 443
   rule_name = my_office_ssh
   region_name = us-east-1
 
@@ -86,7 +93,8 @@ Run below commands to conifgure aws_ipadd command.
   aws_profile = my_project
   security_group_id = sg-dfg9dwe
   protocol = TCP
-  port = 3306
+  start_port = 3306
+  end_port = 3306
   rule_name = my_office_mysql
   region_name = us-east-1
   ```
@@ -112,7 +120,7 @@ Run the aws_ipadd command with aws_ipadd profile.
 
 ## Licence
 
-- [aws_ipadd](https://github.com/piyushsonigra/aws_ipadd/blob/master/LICENSE)
+- [aws_ipadd](https://github.com/spinanicky/aws_ipadd/blob/master/LICENSE)
 
 ## Thanks
 

@@ -23,7 +23,8 @@ if not profile_name in config:
 
 config = config[profile_name]
 rule_name = config['rule_name']
-port = int(config['port'])
+start_port = int(config['start_port'])
+end_port = int(config['end_port'])
 protocol = config['protocol'] or 'tcp'
 security_group_id = config['security_group_id']
 aws_profile = config['aws_profile']
@@ -37,8 +38,8 @@ def allow_ip_permission(security_group_id, ip):
         GroupId=security_group_id,
         IpPermissions=[
             {
-                'FromPort': port,
-                'ToPort': port,
+                'FromPort': start_port,
+                'ToPort': end_port,
                 'IpProtocol': protocol,
                 'IpRanges': [{'CidrIp': ip, 'Description': rule_name}]
             }])
@@ -48,8 +49,8 @@ def revoke_ip_permission(security_group_id, ip):
         GroupId=security_group_id,
         IpPermissions=[
             {
-                'FromPort': port,
-                'ToPort': port,
+                'FromPort': start_port,
+                'ToPort': end_port,
                 'IpProtocol': protocol,
                 'IpRanges': [{'CidrIp': ip}]
             }])
@@ -57,7 +58,7 @@ def revoke_ip_permission(security_group_id, ip):
 def create_rule(security_group_id, public_ip):
     try:
         allow_ip_permission(security_group_id, public_ip)
-        print("Successful! Your IP {} and Port {} is whitelisted.".format(public_ip, port))
+        print("Successful! Your IP {} and Port {} - {} is whitelisted.".format(public_ip, start_port, end_port))
     except Exception as error:
         error = str(error)
         print(error[error.index(':') + 2:])
@@ -76,7 +77,7 @@ except ClientError as eerror:
     print(error)
     sys.exit()
 
-security_group_rule = [security_group_rule for security_group_rule in security_group_rules if 'FromPort' in security_group_rule and security_group_rule['FromPort'] == port]
+security_group_rule = [security_group_rule for security_group_rule in security_group_rules if 'FromPort' in security_group_rule and security_group_rule['FromPort'] == start_port and 'ToPort' in security_group_rule and security_group_rule['ToPort'] == end_port]
 if len(security_group_rule) == 0:
     create_rule(security_group_id, public_ip)
     sys.exit()
