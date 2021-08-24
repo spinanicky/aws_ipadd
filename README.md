@@ -118,6 +118,8 @@ Run the aws_ipadd command with aws_ipadd profile.
     Rule successfully updated!
   ```
 
+  If your public IP is unchanged, you will be informed.
+
 ## Licence
 
 - [aws_ipadd](https://github.com/spinanicky/aws_ipadd/blob/master/LICENSE)
