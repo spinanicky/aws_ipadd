@@ -105,7 +105,7 @@ Run the aws_ipadd command with aws_ipadd profile.
 
   ```console
   $ aws_ipadd my_project_ssh
-    Your IP 12.10.1.14/32 and Port 22 is whitelisted successfully.
+    Your IP 12.10.1.14/32 and Port 22 - 443 is whitelisted successfully.
   ```
 
   If your public IP is changed, aws_ipadd will update aws security group rule with your current public IP.
